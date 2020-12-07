@@ -6,9 +6,9 @@ using System.Data.OleDb;
 using System.Linq;
 using UnityEngine;
 
-public class Mapping : MonoBehaviour
+public class ProportionMapping : MonoBehaviour
 {
-    public enum FingerName { index, middle, ring, pinky };
+    enum FingerName { index, middle, ring, pinky };
 
     public struct MapPoint
     {
@@ -32,7 +32,7 @@ public class Mapping : MonoBehaviour
         }
     }
 
-    public struct Finger
+    struct Finger
     {
         public FingerName fingerName;
         public List<MapPoint> points;
@@ -46,22 +46,10 @@ public class Mapping : MonoBehaviour
         }
     }
 
-    public struct Hand
+    struct Hand
     {
         public List<Finger> fingers;
     }
-
-    //struct MapPointWDist
-    //{
-    //    public MapPoint mp;
-    //    public float distance;
-
-    //    public MapPointWDist(MapPoint mp, float distance)
-    //    {
-    //        this.mp = mp;
-    //        this.distance = distance;
-    //    } 
-    //}
 
     public SphereCollider tip;
 
@@ -74,7 +62,6 @@ public class Mapping : MonoBehaviour
     public float wrapOrigin = 0.07f;
     public float withinFingerPow;
     public float betweenFingerPow;
-
 
     Hand hand = new Hand();
 
@@ -177,7 +164,7 @@ public class Mapping : MonoBehaviour
         return null;
     }
 
-    public (Finger,Finger) getClosestFingers()
+     (Finger,Finger) getClosestFingers()
     {
         Finger closestFinger = new Finger();
         Finger secondClosestFinger = new Finger();
@@ -207,7 +194,7 @@ public class Mapping : MonoBehaviour
         return (closestFinger, secondClosestFinger);
     }
 
-    public Vector3 getFingerOffset(Finger finger)
+     Vector3 getFingerOffset(Finger finger)
     {
 
         float totalDist = finger.points.Sum(p => p.getDist(tip));
@@ -230,8 +217,8 @@ public class Mapping : MonoBehaviour
         return offset;
     }
 
-    public float getFingerDist(Finger f)
-    {
+     float getFingerDist(Finger f)
+     {
         float minDist = float.MaxValue;
         foreach(CapsuleCollider col in f.collider)
         {
@@ -240,5 +227,4 @@ public class Mapping : MonoBehaviour
         }
         return Math.Max(0,minDist);
     }
-
 }
